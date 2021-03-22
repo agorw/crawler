@@ -128,21 +128,3 @@ class Crawler
         }
     }
 }
-// config database
-
-$user = 'root';
-$password = 'root';
-$srv = 'localhost';
-$dbname = 'email';
-$bdd = new PDO('mysql:host=' . $srv . ';dbname=' . $dbname . ';charset=utf8', $user, $password);
-// bot creation
-$bot = new Crawler;
-//bot scan url
-$bot->crawler_url("https://urldunsite.com");
-// insertion email dans db
-$req = $bdd->prepare("INSERT INTO `Newsletter` (`id`, `Email`, `date_create`) VALUES (NULL, :email, :datecreate)");
-foreach ($bot->crawler_Tab_Email() as $email) {
-    $req->execute(array(':email' => $email, ':datecreate' => date("Y-m-d H:i:s")));
-}
-// afficher les url de la page
-var_dump($bot->crawler_Tab_Url());
